@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# app_banksampah
+# Aplikasi Bank Sampah
 
 A new Flutter project.
 
