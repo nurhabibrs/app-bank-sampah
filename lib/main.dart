@@ -98,6 +98,7 @@ class _HomeState extends State<Home> {
           ),
           new RaisedButton(
             child: new Text("Register"),
+            color: Color.fromARGB(255, 92, 201, 241),
             onPressed: () {
               kirimdata();
             },
