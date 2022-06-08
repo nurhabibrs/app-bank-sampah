@@ -1,63 +1,107 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(new MaterialApp(
+    home: new Home(),
+  ));
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
+class Home extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    const appTitle = 'Register';
+  _HomeState createState() => new _HomeState();
+}
 
-    return MaterialApp(
-      title: appTitle,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(appTitle),
+class _HomeState extends State<Home> {
+  TextEditingController controllerNama = new TextEditingController();
+  TextEditingController controllerAlamat = new TextEditingController();
+  TextEditingController controllerNoHP = new TextEditingController();
+  TextEditingController controllerEmail = new TextEditingController();
+  TextEditingController controllerPassword = new TextEditingController();
+  void kirimdata() {
+    AlertDialog alertDialog = new AlertDialog(
+      content: new Container(
+        height: 200.0,
+        child: new Column(
+          children: <Widget>[
+            new Text("Nama\t: ${controllerNama.text}"),
+            new Text("Alamat\t: ${controllerAlamat.text}"),
+            new Text("No HP\t: ${controllerNoHP.text}"),
+            new Text("Email\t: ${controllerEmail.text}"),
+            new Text("Password\t: ${controllerPassword.text}"),
+          ],
         ),
-        body: const MyHomePage(),
       ),
     );
+    showDialog(builder: (context) => alertDialog, context: context);
   }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: ListView(
-        padding: EdgeInsets.all(10.0),
-        children: <Widget>[
-          TextField(
-            decoration: InputDecoration(labelText: 'Nama'),
+    return new Scaffold(
+      appBar: new AppBar(
+        leading: new Icon(Icons.list),
+        title: new Text("Register"),
+        backgroundColor: Colors.teal,
+      ),
+      body: new ListView(
+        padding: new EdgeInsets.all(10.0),
+        children: [
+          new Column(
+            children: <Widget>[
+              new TextField(
+                controller: controllerNama,
+                decoration: new InputDecoration(
+                    hintText: "Nama",
+                    labelText: "Nama",
+                    border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.horizontal())),
+              ),
+              new Padding(padding: EdgeInsets.only(top: 20.0)),
+              new TextField(
+                controller: controllerAlamat,
+                decoration: new InputDecoration(
+                    hintText: "Alamat",
+                    labelText: "Alamat",
+                    border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.horizontal())),
+              ),
+              new Padding(padding: EdgeInsets.only(top: 20.0)),
+              new TextField(
+                controller: controllerNoHP,
+                decoration: new InputDecoration(
+                    hintText: "No HP",
+                    labelText: "No HP",
+                    border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.horizontal())),
+              ),
+              new Padding(padding: EdgeInsets.only(top: 20.0)),
+              new TextField(
+                controller: controllerEmail,
+                decoration: new InputDecoration(
+                    hintText: "Email",
+                    labelText: "Email",
+                    border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.horizontal())),
+              ),
+              new Padding(padding: EdgeInsets.only(top: 20.0)),
+              new TextField(
+                controller: controllerPassword,
+                obscureText: true,
+                decoration: new InputDecoration(
+                    hintText: "Password",
+                    labelText: "Password",
+                    border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.horizontal())),
+              ),
+              new Padding(padding: EdgeInsets.only(top: 20.0)),
+            ],
           ),
-          TextField(
-            decoration: InputDecoration(labelText: 'Alamat'),
+          new RaisedButton(
+            child: new Text("Register"),
+            onPressed: () {
+              kirimdata();
+            },
           ),
-          TextField(
-            decoration: InputDecoration(labelText: 'No HP'),
-          ),
-          TextField(
-            decoration: InputDecoration(labelText: 'Email'),
-          ),
-          TextField(
-            decoration: InputDecoration(labelText: 'Password'),
-          ),
-          RaisedButton(
-            onPressed: () {},
-            child: Text("Register"),
-          )
         ],
       ),
     );
