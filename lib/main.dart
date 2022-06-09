@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(new MaterialApp(
-    home: new Home(),
+  runApp(const MaterialApp(
+    home: HomePage(),
   ));
 }
 
-class Home extends StatefulWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
-  _HomeState createState() => new _HomeState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeState extends State<Home> {
-  TextEditingController controllerNama = new TextEditingController();
-  TextEditingController controllerAlamat = new TextEditingController();
-  TextEditingController controllerNoHP = new TextEditingController();
-  TextEditingController controllerEmail = new TextEditingController();
-  TextEditingController controllerPassword = new TextEditingController();
+class _HomePageState extends State<HomePage> {
+  TextEditingController controllerNama = TextEditingController();
+  TextEditingController controllerAlamat = TextEditingController();
+  TextEditingController controllerNoHP = TextEditingController();
+  TextEditingController controllerEmail = TextEditingController();
+  TextEditingController controllerPassword = TextEditingController();
   void kirimdata() {
-    AlertDialog alertDialog = new AlertDialog(
-      content: new Container(
+    AlertDialog alertDialog = AlertDialog(
+      content: SizedBox(
         height: 200.0,
-        child: new Column(
+        child: Column(
           children: <Widget>[
-            new Text("Nama\t: ${controllerNama.text}"),
-            new Text("Alamat\t: ${controllerAlamat.text}"),
-            new Text("No HP\t: ${controllerNoHP.text}"),
-            new Text("Email\t: ${controllerEmail.text}"),
-            new Text("Password\t: ${controllerPassword.text}"),
+            Text("Nama\t: ${controllerNama.text}"),
+            Text("Alamat\t: ${controllerAlamat.text}"),
+            Text("No HP\t: ${controllerNoHP.text}"),
+            Text("Email\t: ${controllerEmail.text}"),
+            Text("Password\t: ${controllerPassword.text}"),
           ],
         ),
       ),
@@ -37,68 +39,68 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        leading: new Icon(Icons.list),
-        title: new Text("Register"),
+    return Scaffold(
+      appBar: AppBar(
+        leading: const Icon(Icons.list),
+        title: const Text("Register"),
         backgroundColor: Colors.teal,
       ),
-      body: new ListView(
-        padding: new EdgeInsets.all(10.0),
+      body: ListView(
+        padding: const EdgeInsets.all(10.0),
         children: [
-          new Column(
+          Column(
             children: <Widget>[
-              new TextField(
+              TextField(
                 controller: controllerNama,
-                decoration: new InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Nama",
                     labelText: "Nama",
-                    border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.horizontal())),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.horizontal())),
               ),
-              new Padding(padding: EdgeInsets.only(top: 20.0)),
-              new TextField(
+              const Padding(padding: EdgeInsets.only(top: 20.0)),
+              TextField(
                 controller: controllerAlamat,
-                decoration: new InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Alamat",
                     labelText: "Alamat",
-                    border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.horizontal())),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.horizontal())),
               ),
-              new Padding(padding: EdgeInsets.only(top: 20.0)),
-              new TextField(
+              const Padding(padding: EdgeInsets.only(top: 20.0)),
+              TextField(
                 controller: controllerNoHP,
-                decoration: new InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "No HP",
                     labelText: "No HP",
-                    border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.horizontal())),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.horizontal())),
               ),
-              new Padding(padding: EdgeInsets.only(top: 20.0)),
-              new TextField(
+              const Padding(padding: EdgeInsets.only(top: 20.0)),
+              TextField(
                 controller: controllerEmail,
-                decoration: new InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Email",
                     labelText: "Email",
-                    border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.horizontal())),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.horizontal())),
               ),
-              new Padding(padding: EdgeInsets.only(top: 20.0)),
-              new TextField(
+              const Padding(padding: EdgeInsets.only(top: 20.0)),
+              TextField(
                 controller: controllerPassword,
                 obscureText: true,
-                decoration: new InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Password",
                     labelText: "Password",
-                    border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.horizontal())),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.horizontal())),
               ),
-              new Padding(padding: EdgeInsets.only(top: 20.0)),
+              const Padding(padding: EdgeInsets.only(top: 20.0)),
             ],
           ),
-          new RaisedButton(
-            child: new Text("Register"),
-            color: Color.fromARGB(255, 92, 201, 241),
+          RaisedButton(
+            child: const Text("Register"),
+            color: const Color.fromARGB(255, 92, 201, 241),
             onPressed: () {
               kirimdata();
             },
