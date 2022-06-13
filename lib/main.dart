@@ -25,11 +25,11 @@ class _HomePageState extends State<HomePage> {
         height: 200.0,
         child: Column(
           children: <Widget>[
-            Text("Nama\t: ${controllerNama.text}"),
-            Text("Alamat\t: ${controllerAlamat.text}"),
-            Text("No HP\t: ${controllerNoHP.text}"),
-            Text("Email\t: ${controllerEmail.text}"),
-            Text("Password\t: ${controllerPassword.text}"),
+            Text("Nama: ${controllerNama.text}"),
+            Text("Alamat: ${controllerAlamat.text}"),
+            Text("No HP: ${controllerNoHP.text}"),
+            Text("Email: ${controllerEmail.text}"),
+            Text("Password: ${controllerPassword.text}"),
           ],
         ),
       ),
