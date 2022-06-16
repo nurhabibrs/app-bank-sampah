@@ -280,7 +280,7 @@ class _BodyState extends State<Body> {
       Navigator.push(
         context,
         PageTransition(
-          type: PageTransitionType.leftToRight,
+          type: PageTransitionType.fade,
           child: const HomePage(),
         ),
       );
