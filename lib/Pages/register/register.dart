@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app_banksampah/pages/Signup/fields/body.dart';
+import 'package:app_banksampah/pages/register/fields/body.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
