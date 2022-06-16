@@ -71,6 +71,7 @@ class _BodyState extends State<Body> {
                   decoration: const InputDecoration(
                       hintText: "Alamat",
                       labelText: "Alamat",
+                      counterText: "",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.horizontal(
                               left: Radius.circular(15),
