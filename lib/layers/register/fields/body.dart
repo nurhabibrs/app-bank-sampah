@@ -16,12 +16,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  // var _username;
-  // var _fullname;
-  // var _address;
-  // var _phone;
-  // var _email;
-  // var _password;
   bool _obscureText = true;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
