@@ -18,7 +18,6 @@ class _BodyState extends State<Body> {
   final TextEditingController controllerPhone = TextEditingController();
   final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
-
   bool _obscureText = true;
 
   @override
@@ -30,8 +29,13 @@ class _BodyState extends State<Body> {
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: controllerUsername,
-          validator: (value) =>
-              (value!.isEmpty) ? "This field can't empty" : null,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text.';
+            } else {
+              return null;
+            }
+          },
           decoration: const InputDecoration(
               hintText: "Username",
               labelText: "Username",
@@ -43,8 +47,13 @@ class _BodyState extends State<Body> {
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: controllerFullname,
-          validator: (value) =>
-              (value!.isEmpty) ? "This field can't empty" : null,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text.';
+            } else {
+              return null;
+            }
+          },
           decoration: const InputDecoration(
               hintText: "Nama Lengkap",
               labelText: "Nama Lengkap",
@@ -56,8 +65,13 @@ class _BodyState extends State<Body> {
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: controllerAddress,
-          validator: (value) =>
-              (value!.isEmpty) ? "This field can't empty" : null,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text.';
+            } else {
+              return null;
+            }
+          },
           decoration: const InputDecoration(
               hintText: "Alamat",
               labelText: "Alamat",
@@ -69,8 +83,8 @@ class _BodyState extends State<Body> {
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: controllerPhone,
-          validator: (value) =>
-              (value!.isEmpty) ? "This field can't empty" : null,
+          validator: (value) => isValidPhoneNumber(value),
+          maxLength: 12,
           decoration: const InputDecoration(
               hintText: "Nomor HP",
               labelText: "Nomor HP",
@@ -95,8 +109,13 @@ class _BodyState extends State<Body> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: controllerPassword,
           obscureText: _obscureText,
-          validator: (value) =>
-              (value!.isEmpty) ? "This field can't empty" : null,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text.';
+            } else {
+              return null;
+            }
+          },
           decoration: InputDecoration(
               hintText: "Password",
               labelText: "Password",
@@ -134,4 +153,15 @@ validateEmail(String? value) {
   } else {
     return null;
   }
+}
+
+isValidPhoneNumber(String? value) {
+  // I just copied the pattern from here: https://regexr.com/3c53v
+  String pattern = r'^[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
+  final regex = RegExp(pattern);
+
+  if (value == null || value.isEmpty || !regex.hasMatch(value)) {
+    return 'Enter a valid phone number.';
+  }
+  return null;
 }
