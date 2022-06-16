@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import '../../../fields/rounded_button.dart';
-import 'package:app_banksampah/pages/register/fields/background.dart';
-import 'package:app_banksampah/pages/welcome/welcome.dart';
+import 'package:app_banksampah/layers/register/fields/background.dart';
+import 'package:app_banksampah/layers/welcome/welcome.dart';
 
 class Body extends StatefulWidget {
   const Body({
