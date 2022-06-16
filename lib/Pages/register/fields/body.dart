@@ -5,7 +5,7 @@ import 'package:app_banksampah/pages/register/fields/background.dart';
 import 'package:app_banksampah/pages/welcome/welcome.dart';
 
 class Body extends StatefulWidget {
-  Body({
+  const Body({
     Key? key,
   }) : super(key: key);
 

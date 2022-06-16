@@ -26,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: const Color.fromARGB(255, 76, 202, 120),
         automaticallyImplyLeading: false,
       ),
-      body: Body(),
+      body: const Body(),
     );
   }
 }

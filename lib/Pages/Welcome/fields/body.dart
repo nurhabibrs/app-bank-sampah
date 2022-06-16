@@ -17,7 +17,11 @@ class Body extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const Text(
-            "WELCOME TO BANK SAMPAH APP",
+            "SELAMAT DATANG",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+          const Text(
+            "DI APLIKASI BANK SAMPAH",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
           SizedBox(height: size.height * 0.01),
