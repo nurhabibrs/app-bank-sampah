@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app_banksampah/fields/rounded_button.dart';
-import 'package:app_banksampah/pages/signup/register.dart';
+import 'package:app_banksampah/pages/register/register.dart';
 import 'package:app_banksampah/pages/login/login.dart';
 import 'package:app_banksampah/pages/welcome/fields/background.dart';
 import 'package:page_transition/page_transition.dart';
