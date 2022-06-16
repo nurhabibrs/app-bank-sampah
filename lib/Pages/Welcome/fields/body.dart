@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app_banksampah/fields/rounded_button.dart';
 import 'package:app_banksampah/pages/signup/register.dart';
+import 'package:app_banksampah/pages/login/login.dart';
 import 'package:app_banksampah/pages/welcome/fields/background.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -27,21 +28,30 @@ class Body extends StatelessWidget {
           SizedBox(height: size.height * 0.04),
           RoundedButton(
             text: "LOGIN",
-            press: () {},
+            press: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: const LoginScreen(),
+                ),
+              );
+            },
           ),
           RoundedButton(
-              text: "SIGNUP",
-              color: const Color.fromARGB(255, 167, 211, 182),
-              textColor: Colors.black,
-              press: () {
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: const RegisterScreen(),
-                  ),
-                );
-              }),
+            text: "REGISTER",
+            color: const Color.fromARGB(255, 167, 211, 182),
+            textColor: Colors.black,
+            press: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.rightToLeft,
+                  child: const RegisterScreen(),
+                ),
+              );
+            },
+          ),
         ],
       ),
     ));

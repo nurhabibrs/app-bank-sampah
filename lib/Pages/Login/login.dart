@@ -1,3 +1,4 @@
+import 'package:app_banksampah/pages/login/fields/body.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -5,8 +6,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(),
-    );
+    Size size = MediaQuery.of(context).size;
+    return const Scaffold(body: Body());
   }
 }

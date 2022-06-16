@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app_banksampah/pages/welcome/welcome.dart';
-import 'package:app_banksampah/pages/signup/fields/body.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:app_banksampah/pages/Signup/fields/body.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -14,21 +12,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.leftToRight,
-                    child: const HomePage(),
-                  ),
-                );
-              }),
-          backgroundColor: const Color.fromARGB(255, 76, 202, 120),
-          title: const Text("SIGNUP"),
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0.0,
+        title: const Text(
+          "REGISTER",
+          style: TextStyle(
+              color: Color(0xffffffff),
+              fontWeight: FontWeight.w500,
+              fontStyle: FontStyle.normal,
+              fontSize: 20.0),
         ),
-        body: Body());
+        backgroundColor: const Color.fromARGB(255, 76, 202, 120),
+        automaticallyImplyLeading: false,
+      ),
+      body: Body(),
+    );
   }
 }
