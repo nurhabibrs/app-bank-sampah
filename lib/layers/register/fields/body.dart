@@ -36,15 +36,12 @@ class _BodyState extends State<Body> {
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _controllerUsername,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Tidak boleh kosong.';
-                    }
-                    return null;
-                  },
+                  validator: (value) => checkUsername(value),
+                  maxLength: 255,
                   decoration: const InputDecoration(
                       hintText: "Username",
                       labelText: "Username",
+                      counterText: "",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.horizontal(
                               left: Radius.circular(15),
@@ -54,15 +51,12 @@ class _BodyState extends State<Body> {
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _controllerFullname,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Tidak boleh kosong.';
-                    }
-                    return null;
-                  },
+                  validator: (value) => checkFullname(value),
+                  maxLength: 255,
                   decoration: const InputDecoration(
                       hintText: "Nama Lengkap",
                       labelText: "Nama Lengkap",
+                      counterText: "",
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.horizontal(
                               left: Radius.circular(15),
@@ -72,12 +66,8 @@ class _BodyState extends State<Body> {
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _controllerAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Tidak boleh kosong.';
-                    }
-                    return null;
-                  },
+                  validator: (value) => checkAddress(value),
+                  maxLength: 255,
                   decoration: const InputDecoration(
                       hintText: "Alamat",
                       labelText: "Alamat",
@@ -165,12 +155,42 @@ class _BodyState extends State<Body> {
     );
   }
 
+  checkUsername(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Tidak boleh kosong.';
+    }
+    if (value.length < 3) {
+      return 'Minimal 3 karakter';
+    }
+    return null;
+  }
+
+  checkFullname(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Tidak boleh kosong.';
+    }
+    if (value.length < 3) {
+      return 'Minimal 3 karakter';
+    }
+    return null;
+  }
+
+  checkAddress(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Tidak boleh kosong.';
+    }
+    if (value.length < 3) {
+      return 'Minimal 3 karakter';
+    }
+    return null;
+  }
+
   checkPassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Tidak boleh kosong.';
     }
     if (value.length < 8) {
-      return 'Terlalu pendek.';
+      return 'Minimal 8 karakter';
     }
     return null;
   }
@@ -181,7 +201,10 @@ class _BodyState extends State<Body> {
         r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
         r"{0,253}[a-zA-Z0-9])?)*$";
     RegExp regex = RegExp(pattern);
-    if (value == null || value.isEmpty || !regex.hasMatch(value)) {
+    if (value == null || value.isEmpty) {
+      return 'Tidak boleh kosong.';
+    }
+    if (!regex.hasMatch(value)) {
       return 'Masukkan email yang valid.';
     } else {
       return null;
@@ -193,7 +216,10 @@ class _BodyState extends State<Body> {
     String pattern = r'^[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
     final regex = RegExp(pattern);
 
-    if (value == null || value.isEmpty || !regex.hasMatch(value)) {
+    if (value == null || value.isEmpty) {
+      return 'Tidak boleh kosong.';
+    }
+    if (!regex.hasMatch(value)) {
       return 'Masukkan nomor telepon yang valid.';
     }
     if (value.length < 3) {
