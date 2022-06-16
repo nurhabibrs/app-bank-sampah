@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:app_banksampah/Pages/Welcome/welcome.dart';
-import 'package:app_banksampah/Pages/Signup/fields/body.dart';
+import 'package:app_banksampah/pages/welcome/welcome.dart';
+import 'package:app_banksampah/pages/signup/fields/body.dart';
 import 'package:page_transition/page_transition.dart';
 
 class RegisterScreen extends StatefulWidget {

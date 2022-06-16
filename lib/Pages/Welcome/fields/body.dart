@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app_banksampah/fields/rounded_button.dart';
-import 'package:app_banksampah/Pages/Signup/register.dart';
-import 'package:app_banksampah/Pages/Welcome/fields/background.dart';
+import 'package:app_banksampah/pages/signup/register.dart';
+import 'package:app_banksampah/pages/welcome/fields/background.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Body extends StatelessWidget {

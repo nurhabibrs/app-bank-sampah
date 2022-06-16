@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../fields/rounded_button.dart';
-import 'package:app_banksampah/Pages/Signup/fields/background.dart';
+import 'package:app_banksampah/pages/signup/fields/background.dart';
 
 class Body extends StatefulWidget {
   Body({
