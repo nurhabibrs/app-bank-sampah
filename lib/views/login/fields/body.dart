@@ -2,7 +2,7 @@ import 'package:app_banksampah/views/login/fields/background.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../assets/rounded_button.dart';
+import '../../../extensions/rounded_button.dart';
 import '../../welcome/welcome.dart';
 
 class Body extends StatelessWidget {
@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
                 Navigator.push(
                   context,
                   PageTransition(
-                    type: PageTransitionType.leftToRight,
+                    type: PageTransitionType.fade,
                     child: const HomePage(),
                   ),
                 );

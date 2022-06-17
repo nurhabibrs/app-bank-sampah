@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app_banksampah/assets/rounded_button.dart';
+import 'package:app_banksampah/extensions/rounded_button.dart';
 import 'package:app_banksampah/views/register/register.dart';
 import 'package:app_banksampah/views/login/login.dart';
 import 'package:app_banksampah/views/welcome/fields/background.dart';
@@ -36,7 +36,7 @@ class Body extends StatelessWidget {
                 Navigator.push(
                   context,
                   PageTransition(
-                    type: PageTransitionType.rightToLeft,
+                    type: PageTransitionType.fade,
                     child: const LoginScreen(),
                   ),
                 );
@@ -50,7 +50,7 @@ class Body extends StatelessWidget {
                 Navigator.push(
                   context,
                   PageTransition(
-                    type: PageTransitionType.rightToLeft,
+                    type: PageTransitionType.fade,
                     child: const RegisterScreen(),
                   ),
                 );

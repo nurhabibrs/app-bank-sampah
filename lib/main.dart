@@ -1,7 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:app_banksampah/views/welcome/welcome.dart';
+import 'package:flutter/services.dart';
 
-void main() {
+Future<void> main() async {
+  // Import certificate to certificate verify
+  WidgetsFlutterBinding.ensureInitialized();
+  ByteData data =
+      await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  SecurityContext.defaultContext
+      .setTrustedCertificatesBytes(data.buffer.asUint8List());
   runApp(const BankSampahApp());
 }
 

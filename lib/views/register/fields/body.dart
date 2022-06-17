@@ -1,8 +1,8 @@
-import 'package:app_banksampah/assets/hidden_keyboard.dart';
+import 'package:app_banksampah/extensions/hidden_keyboard.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:app_banksampah/assets/rounded_button.dart';
+import 'package:app_banksampah/extensions/rounded_button.dart';
 import 'package:app_banksampah/views/register/fields/background.dart';
 import 'package:app_banksampah/views/welcome/welcome.dart';
 
@@ -160,6 +160,10 @@ class _BodyState extends State<Body> {
                       color: const Color.fromARGB(255, 76, 202, 120),
                       textColor: Colors.white,
                       press: () {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                        _formKey.currentState!.save();
                         postUser();
                       },
                     ),
@@ -171,7 +175,7 @@ class _BodyState extends State<Body> {
                         Navigator.push(
                           context,
                           PageTransition(
-                            type: PageTransitionType.leftToRight,
+                            type: PageTransitionType.fade,
                             child: const HomePage(),
                           ),
                         );
@@ -187,7 +191,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  checkUsername(String? value) {
+  String? checkUsername(String? value) {
     if (value!.isEmpty) {
       return 'Tidak boleh kosong.';
     }
@@ -197,7 +201,7 @@ class _BodyState extends State<Body> {
     return null;
   }
 
-  checkFullname(String? value) {
+  String? checkFullname(String? value) {
     if (value!.isEmpty) {
       return 'Tidak boleh kosong.';
     }
@@ -207,7 +211,7 @@ class _BodyState extends State<Body> {
     return null;
   }
 
-  checkAddress(String? value) {
+  String? checkAddress(String? value) {
     if (value!.isEmpty) {
       return 'Tidak boleh kosong.';
     }
@@ -217,7 +221,7 @@ class _BodyState extends State<Body> {
     return null;
   }
 
-  checkPassword(String? value) {
+  String? checkPassword(String? value) {
     if (value!.isEmpty) {
       return 'Tidak boleh kosong.';
     }
@@ -227,7 +231,7 @@ class _BodyState extends State<Body> {
     return null;
   }
 
-  checkEmail(String? value) {
+  String? checkEmail(String? value) {
     String pattern =
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
         r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
@@ -243,7 +247,7 @@ class _BodyState extends State<Body> {
     }
   }
 
-  checkPhoneNumber(String? value) {
+  String? checkPhoneNumber(String? value) {
     // Copied from: https://regexr.com/3c53v
     String pattern = r'^[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
     final regex = RegExp(pattern);
@@ -260,7 +264,9 @@ class _BodyState extends State<Body> {
     return null;
   }
 
-  postUser() async {
+  Future postUser() async {
+    var dio = Dio();
+
     var formData = FormData.fromMap(
       {
         'username': _controllerUsername.text,
@@ -272,21 +278,58 @@ class _BodyState extends State<Body> {
       },
     );
 
-    Response response = await Dio().post(
-        'https://345d-103-23-224-196.ap.ngrok.io/register',
-        data: formData);
-
-    if (response.statusCode == 200) {
-      Navigator.push(
-        context,
-        PageTransition(
-          type: PageTransitionType.fade,
-          child: const HomePage(),
-        ),
+    try {
+      // Check response
+      await dio
+          .post('https://345d-103-23-224-196.ap.ngrok.io/register',
+              data: formData)
+          .then(
+        (response) {
+          AlertDialog alert = AlertDialog(
+            content: const Text("Pendaftaran Pengguna Berhasil"),
+            actions: [
+              TextButton(
+                child: const Text("KEMBALI"),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      child: const HomePage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return alert;
+            },
+          );
+          // print(response.data["response"]["message"]);
+        },
+      );
+    } on DioError catch (e) {
+      // Error message Pop Up
+      AlertDialog alert = AlertDialog(
+        content: Text(e.response!.data["response"].toString()),
+        actions: [
+          TextButton(
+            child: const Text("KEMBALI"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
       );
     }
-
-    // check respons
-    print(response.data.toString());
   }
 }
