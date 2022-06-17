@@ -129,68 +129,6 @@ class _BodyState extends State<Body> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Background(
-      child: DismissKeyboard(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(15.0),
-                  children: <Widget>[
-                    buildUsernameField(),
-                    SizedBox(height: size.height * 0.02),
-                    buildFullnameField(),
-                    SizedBox(height: size.height * 0.02),
-                    buildAddressField(),
-                    SizedBox(height: size.height * 0.02),
-                    buildPhoneField(),
-                    SizedBox(height: size.height * 0.02),
-                    buildEmailField(),
-                    SizedBox(height: size.height * 0.02),
-                    buildPasswordField(),
-                    SizedBox(height: size.height * 0.02),
-                    RoundedButton(
-                      text: "REGISTER",
-                      color: const Color.fromARGB(255, 76, 202, 120),
-                      textColor: Colors.white,
-                      press: () {
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        }
-                        _formKey.currentState!.save();
-                        postUser();
-                      },
-                    ),
-                    RoundedButton(
-                      text: "CANCEL",
-                      color: const Color.fromARGB(255, 167, 211, 182),
-                      textColor: Colors.black,
-                      press: () {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            child: const HomePage(),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   String? checkUsername(String? value) {
     if (value!.isEmpty) {
       return 'Tidak boleh kosong.';
@@ -331,5 +269,67 @@ class _BodyState extends State<Body> {
         },
       );
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Background(
+      child: DismissKeyboard(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.all(15.0),
+                  children: <Widget>[
+                    buildUsernameField(),
+                    SizedBox(height: size.height * 0.02),
+                    buildFullnameField(),
+                    SizedBox(height: size.height * 0.02),
+                    buildAddressField(),
+                    SizedBox(height: size.height * 0.02),
+                    buildPhoneField(),
+                    SizedBox(height: size.height * 0.02),
+                    buildEmailField(),
+                    SizedBox(height: size.height * 0.02),
+                    buildPasswordField(),
+                    SizedBox(height: size.height * 0.02),
+                    RoundedButton(
+                      text: "REGISTER",
+                      color: const Color.fromARGB(255, 76, 202, 120),
+                      textColor: Colors.white,
+                      press: () {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                        _formKey.currentState!.save();
+                        postUser();
+                      },
+                    ),
+                    RoundedButton(
+                      text: "CANCEL",
+                      color: const Color.fromARGB(255, 167, 211, 182),
+                      textColor: Colors.black,
+                      press: () {
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            child: const HomePage(),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
