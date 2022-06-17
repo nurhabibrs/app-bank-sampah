@@ -1,10 +1,10 @@
-import 'package:app_banksampah/layers/register/fields/dismisskeyboard.dart';
+import 'package:app_banksampah/assets/dismisskeyboard.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import '../../../fields/rounded_button.dart';
-import 'package:app_banksampah/layers/register/fields/background.dart';
-import 'package:app_banksampah/layers/welcome/welcome.dart';
+import 'package:app_banksampah/assets/rounded_button.dart';
+import 'package:app_banksampah/views/register/fields/background.dart';
+import 'package:app_banksampah/views/welcome/welcome.dart';
 
 class Body extends StatefulWidget {
   const Body({

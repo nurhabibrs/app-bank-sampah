@@ -1,8 +1,8 @@
-import 'package:app_banksampah/layers/login/fields/background.dart';
+import 'package:app_banksampah/views/login/fields/background.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../fields/rounded_button.dart';
+import '../../../assets/rounded_button.dart';
 import '../../welcome/welcome.dart';
 
 class Body extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app_banksampah/layers/welcome/welcome.dart';
+import 'package:app_banksampah/views/welcome/welcome.dart';
 
 void main() {
   runApp(const BankSampahApp());
