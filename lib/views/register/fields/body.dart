@@ -251,8 +251,14 @@ class _BodyState extends State<Body> {
       );
     } on DioError catch (e) {
       // Error message Pop Up
+      var _fieldUsername = e.response?.data["response"]["username"].toString();
+      var _fieldEmail = e.response?.data["response"]["email"].toString();
+      var _fieldPhone = e.response?.data["response"]["phone"].toString();
+      // print("Username = $_fieldUsername\n Email = $_fieldEmail \nNomor HP =$_fieldPhone");
+
       AlertDialog alert = AlertDialog(
-        content: Text(e.response!.data["response"].toString()),
+        title: const Text("Permintaan Gagal!"),
+        content: Text("$_fieldUsername\n$_fieldEmail\n$_fieldPhone"),
         actions: [
           TextButton(
             child: const Text("KEMBALI"),
@@ -275,7 +281,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Background(
-      child: DismissKeyboard(
+      child: HiddenKeyboard(
         child: Form(
           key: _formKey,
           child: Column(
@@ -299,28 +305,13 @@ class _BodyState extends State<Body> {
                     SizedBox(height: size.height * 0.02),
                     RoundedButton(
                       text: "REGISTER",
-                      color: const Color.fromARGB(255, 76, 202, 120),
-                      textColor: Colors.white,
+                      textColor: const Color.fromARGB(255, 255, 255, 255),
                       press: () {
                         if (!_formKey.currentState!.validate()) {
                           return;
                         }
                         _formKey.currentState!.save();
                         postUser();
-                      },
-                    ),
-                    RoundedButton(
-                      text: "CANCEL",
-                      color: const Color.fromARGB(255, 167, 211, 182),
-                      textColor: Colors.black,
-                      press: () {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            child: const HomePage(),
-                          ),
-                        );
                       },
                     ),
                   ],

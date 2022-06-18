@@ -44,8 +44,8 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               text: "REGISTER",
-              color: const Color.fromARGB(255, 167, 211, 182),
-              textColor: Colors.black,
+              color: const Color.fromARGB(255, 130, 241, 130),
+              textColor: const Color.fromARGB(255, 0, 0, 0),
               press: () {
                 Navigator.push(
                   context,

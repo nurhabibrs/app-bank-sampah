@@ -18,12 +18,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: const Text(
           "REGISTER",
           style: TextStyle(
-              color: Color(0xffffffff),
+              color: Color.fromARGB(255, 255, 255, 255),
               fontWeight: FontWeight.w500,
               fontStyle: FontStyle.normal,
               fontSize: 20.0),
         ),
-        backgroundColor: const Color.fromARGB(255, 76, 202, 120),
+        backgroundColor: const Color.fromARGB(255, 50, 205, 50),
         automaticallyImplyLeading: false,
       ),
       body: const Body(),

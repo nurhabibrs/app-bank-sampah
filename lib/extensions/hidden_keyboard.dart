@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class DismissKeyboard extends StatelessWidget {
+class HiddenKeyboard extends StatelessWidget {
   final Widget child;
-  const DismissKeyboard({Key? key, required this.child}) : super(key: key);
+  const HiddenKeyboard({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
