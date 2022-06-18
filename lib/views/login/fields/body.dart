@@ -103,11 +103,52 @@ class _BodyState extends State<Body> {
       await dio
           .post('https://345d-103-23-224-196.ap.ngrok.io/login', data: formData)
           .then(
-            (response) {},
+        (response) {
+          AlertDialog alert = AlertDialog(
+            content: const Text("Login Berhasil!"),
+            actions: [
+              TextButton(
+                child: const Text("KEMBALI"),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      child: const HomePage(),
+                    ),
+                  );
+                },
+              ),
+            ],
           );
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return alert;
+            },
+          );
+        },
+      );
     } on DioError catch (e) {
       // Error message Pop Up
-
+      AlertDialog alert = AlertDialog(
+        title: const Text("Login Gagal!"),
+        content: Text("Username atau password salah."),
+        actions: [
+          TextButton(
+            child: const Text("KEMBALI"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
     }
   }
 
@@ -125,7 +166,7 @@ class _BodyState extends State<Body> {
                 height: 45,
                 child: Text(
                   "LOGIN PENGGUNA",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
               Padding(
@@ -146,11 +187,6 @@ class _BodyState extends State<Body> {
                     return;
                   }
                   _formKey.currentState!.save();
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                        child: const HomePage(), type: PageTransitionType.fade),
-                  );
                   loginUser();
                 },
               ),
