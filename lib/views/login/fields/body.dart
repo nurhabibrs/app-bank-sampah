@@ -113,52 +113,49 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Background(
-      // child: SingleChildScrollView(
-      child: HiddenKeyboard(
+      child: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Form(
           key: _formKey,
-          child: Center(
-            child: ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.all(15.0),
-              children: <Widget>[
-                const Center(
-                  child: Text(
-                    "LOGIN",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(
+                height: 45,
+                child: Text(
+                  "LOGIN PENGGUNA",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
-                SizedBox(height: size.height * 0.02),
-                buildUsernameField(),
-                SizedBox(height: size.height * 0.02),
-                buildPasswordField(),
-                SizedBox(height: size.height * 0.02),
-                RoundedButton(
-                  text: "LOGIN",
-                  textColor: const Color.fromARGB(255, 255, 255, 255),
-                  press: () {
-                    if (!_formKey.currentState!.validate()) {
-                      return;
-                    }
-                    _formKey.currentState!.save();
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                          child: const HomePage(),
-                          type: PageTransitionType.fade),
-                    );
-
-                    loginUser();
-                  },
-                ),
-              ],
-            ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                child: buildUsernameField(),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                child: buildPasswordField(),
+              ),
+              RoundedButton(
+                text: "LOGIN",
+                textColor: const Color.fromARGB(255, 255, 255, 255),
+                press: () {
+                  if (!_formKey.currentState!.validate()) {
+                    return;
+                  }
+                  _formKey.currentState!.save();
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                        child: const HomePage(), type: PageTransitionType.fade),
+                  );
+                  loginUser();
+                },
+              ),
+            ],
           ),
-          // ),
-          // ],
-          // ),
         ),
       ),
     );

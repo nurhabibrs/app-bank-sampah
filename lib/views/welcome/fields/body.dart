@@ -13,23 +13,22 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
               "SELAMAT DATANG",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             const Text(
               "DI APLIKASI BANK SAMPAH",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            SizedBox(height: size.height * 0.01),
             Image.asset(
               'assets/images/trash.png',
               height: size.height * 0.4,
             ),
-            SizedBox(height: size.height * 0.04),
             RoundedButton(
               text: "LOGIN",
               press: () {

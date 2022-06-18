@@ -4,7 +4,7 @@ import 'package:app_banksampah/views/welcome/welcome.dart';
 import 'package:flutter/services.dart';
 
 Future<void> main() async {
-  // Import certificate to certificate verify
+  // Import certificate to verify the certificate
   WidgetsFlutterBinding.ensureInitialized();
   ByteData data =
       await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');

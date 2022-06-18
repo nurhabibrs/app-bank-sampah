@@ -19,6 +19,8 @@ class Background extends StatelessWidget {
             child: Image.asset(
               "assets/images/top_ornament.png",
               width: size.width * 0.3,
+              color: Colors.white.withOpacity(0.8),
+              colorBlendMode: BlendMode.modulate,
             ),
           ),
           Positioned(
@@ -27,6 +29,8 @@ class Background extends StatelessWidget {
             child: Image.asset(
               "assets/images/bottom_ornament.png",
               width: size.width * 0.3,
+              color: Colors.white.withOpacity(0.8),
+              colorBlendMode: BlendMode.modulate,
             ),
           ),
           child,

@@ -279,43 +279,63 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Background(
-      child: HiddenKeyboard(
+      child: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Form(
           key: _formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(15.0),
-                  children: <Widget>[
-                    buildUsernameField(),
-                    SizedBox(height: size.height * 0.02),
-                    buildFullnameField(),
-                    SizedBox(height: size.height * 0.02),
-                    buildAddressField(),
-                    SizedBox(height: size.height * 0.02),
-                    buildPhoneField(),
-                    SizedBox(height: size.height * 0.02),
-                    buildEmailField(),
-                    SizedBox(height: size.height * 0.02),
-                    buildPasswordField(),
-                    SizedBox(height: size.height * 0.02),
-                    RoundedButton(
-                      text: "REGISTER",
-                      textColor: const Color.fromARGB(255, 255, 255, 255),
-                      press: () {
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        }
-                        _formKey.currentState!.save();
-                        postUser();
-                      },
-                    ),
-                  ],
+            children: <Widget>[
+              const SizedBox(
+                height: 45,
+                child: Text(
+                  "REGISTRASI PENGGUNA",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                child: buildUsernameField(),
+              ),
+              //SizedBox(height: size.height * 0.02),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                child: buildFullnameField(),
+              ),
+              //SizedBox(height: size.height * 0.02),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                child: buildAddressField(),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                child: buildPhoneField(),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                child: buildEmailField(),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                child: buildPasswordField(),
+              ),
+              RoundedButton(
+                text: "REGISTER",
+                textColor: const Color.fromARGB(255, 255, 255, 255),
+                press: () {
+                  if (!_formKey.currentState!.validate()) {
+                    return;
+                  }
+                  _formKey.currentState!.save();
+                  postUser();
+                },
               ),
             ],
           ),
