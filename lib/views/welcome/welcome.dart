@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:app_banksampah/views/welcome/fields/body.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class CoverPage extends StatelessWidget {
+  const CoverPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

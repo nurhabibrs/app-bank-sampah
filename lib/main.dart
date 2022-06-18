@@ -25,7 +25,7 @@ class BankSampahApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      home: const HomePage(),
+      home: const CoverPage(),
     );
   }
 }

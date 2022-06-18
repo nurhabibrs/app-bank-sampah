@@ -1,16 +1,13 @@
-import 'package:app_banksampah/extensions/hidden_keyboard.dart';
-import 'package:app_banksampah/views/login/fields/background.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:app_banksampah/views/home/home.dart';
+import 'package:app_banksampah/views/login/fields/background.dart';
 import 'package:page_transition/page_transition.dart';
-
-import '../../../extensions/rounded_button.dart';
-import '../../welcome/welcome.dart';
+import 'package:app_banksampah/extensions/rounded_button.dart';
 
 class Body extends StatefulWidget {
-  const Body({
-    Key? key,
-  }) : super(key: key);
+  const Body({Key? key}) : super(key: key);
+
   @override
   State<Body> createState() => _BodyState();
 }
@@ -131,18 +128,21 @@ class _BodyState extends State<Body> {
       );
     } on DioError catch (e) {
       // Error message Pop Up
+      var _errorMessage = e.response?.data["response"].toString();
+
       AlertDialog alert = AlertDialog(
         title: const Text("Login Gagal!"),
-        content: Text("Username atau password salah."),
+        content: Text("$_errorMessage"),
         actions: [
           TextButton(
-            child: const Text("KEMBALI"),
+            child: const Text("OK"),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
         ],
       );
+
       showDialog(
         context: context,
         builder: (BuildContext context) {
