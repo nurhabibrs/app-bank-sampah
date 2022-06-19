@@ -100,27 +100,12 @@ class _BodyState extends State<Body> {
           .post('https://345d-103-23-224-196.ap.ngrok.io/login', data: formData)
           .then(
         (response) {
-          AlertDialog alert = AlertDialog(
-            content: const Text("Login Berhasil!"),
-            actions: [
-              TextButton(
-                child: const Text("KEMBALI"),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ),
-                  );
-                },
-              ),
-            ],
-          );
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return alert;
-            },
+          String token = response.data["response"]["token"];
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(token: token),
+            ),
           );
         },
       );

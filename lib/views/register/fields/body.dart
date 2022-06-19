@@ -225,7 +225,7 @@ class _BodyState extends State<Body> {
               TextButton(
                 child: const Text("LANJUT"),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const LoginScreen(),

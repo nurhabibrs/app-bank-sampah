@@ -18,11 +18,11 @@ class Body extends StatelessWidget {
           children: <Widget>[
             const Text(
               "SELAMAT DATANG",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
             ),
             const Text(
               "DI APLIKASI BANK SAMPAH",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
             ),
             Image.asset(
               'assets/images/trash.png',
@@ -39,18 +39,31 @@ class Body extends StatelessWidget {
                 );
               },
             ),
-            RoundedButton(
-              text: "REGISTER",
-              color: const Color.fromARGB(255, 130, 241, 130),
-              textColor: const Color.fromARGB(255, 0, 0, 0),
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const RegisterScreen(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  'Belum memiliki akun?',
+                  style: TextStyle(fontSize: 17),
+                ),
+                TextButton(
+                  child: const Text(
+                    'Register',
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Color.fromARGB(255, 50, 205, 50),
+                    ),
                   ),
-                );
-              },
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RegisterScreen(),
+                      ),
+                    );
+                  },
+                )
+              ],
             ),
           ],
         ),
