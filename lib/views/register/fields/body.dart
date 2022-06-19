@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:app_banksampah/extensions/rounded_button.dart';
-import 'package:app_banksampah/views/register/fields/background.dart';
-import 'package:app_banksampah/views/welcome/welcome.dart';
+import '../../register/fields/background.dart';
+import '../../login/login.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -199,10 +198,10 @@ class _BodyState extends State<Body> {
     return null;
   }
 
-  Future postUser() async {
+  Future registerUser() async {
     var dio = Dio();
 
-    var formData = FormData.fromMap(
+    dynamic formData = FormData.fromMap(
       {
         'username': _controllerUsername.text,
         'fullname': _controllerFullname.text,
@@ -224,13 +223,12 @@ class _BodyState extends State<Body> {
             content: const Text("Pendaftaran Pengguna Berhasil"),
             actions: [
               TextButton(
-                child: const Text("KEMBALI"),
+                child: const Text("LANJUT"),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: const CoverPage(),
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
                     ),
                   );
                 },
@@ -254,7 +252,7 @@ class _BodyState extends State<Body> {
       // print("Username = $_fieldUsername\n Email = $_fieldEmail \nNomor HP =$_fieldPhone");
 
       AlertDialog alert = AlertDialog(
-        title: const Text("Permintaan Gagal!"),
+        title: const Text("Registrasi Gagal!"),
         content: Text("$_fieldUsername\n$_fieldEmail\n$_fieldPhone"),
         actions: [
           TextButton(
@@ -330,8 +328,7 @@ class _BodyState extends State<Body> {
                   if (!_formKey.currentState!.validate()) {
                     return;
                   }
-                  _formKey.currentState!.save();
-                  postUser();
+                  registerUser();
                 },
               ),
             ],

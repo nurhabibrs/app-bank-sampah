@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 Future<void> main() async {
   // Import certificate to verify the certificate
   WidgetsFlutterBinding.ensureInitialized();
-  ByteData data =
-      await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  ByteData data = await PlatformAssetBundle()
+      .load('assets/ca-certificate/lets-encrypt-r3.pem');
   SecurityContext.defaultContext
       .setTrustedCertificatesBytes(data.buffer.asUint8List());
   runApp(const BankSampahApp());

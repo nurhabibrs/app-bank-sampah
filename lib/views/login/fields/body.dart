@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:app_banksampah/views/home/home.dart';
 import 'package:app_banksampah/views/login/fields/background.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:app_banksampah/extensions/rounded_button.dart';
 
 class Body extends StatefulWidget {
@@ -109,9 +108,8 @@ class _BodyState extends State<Body> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: const HomePage(),
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
                     ),
                   );
                 },
@@ -186,7 +184,6 @@ class _BodyState extends State<Body> {
                   if (!_formKey.currentState!.validate()) {
                     return;
                   }
-                  _formKey.currentState!.save();
                   loginUser();
                 },
               ),
