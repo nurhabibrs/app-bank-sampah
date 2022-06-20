@@ -173,6 +173,29 @@ class _BodyState extends State<Body> {
                   }
                 },
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextButton(
+                    child: const Text(
+                      'Lupa Password?',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Color.fromARGB(255, 50, 205, 50),
+                      ),
+                    ),
+                    onPressed: () {
+                      //Navigate to page forgot password
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const RegisterScreen(),
+                      //   ),
+                      // );
+                    },
+                  )
+                ],
+              ),
             ],
           ),
         ),

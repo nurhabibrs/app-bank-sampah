@@ -48,7 +48,7 @@ class Body extends StatelessWidget {
                 ),
                 TextButton(
                   child: const Text(
-                    'Register',
+                    'Buat Akun',
                     style: TextStyle(
                       fontSize: 17,
                       color: Color.fromARGB(255, 50, 205, 50),

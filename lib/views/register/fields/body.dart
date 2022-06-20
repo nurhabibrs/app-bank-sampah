@@ -78,8 +78,8 @@ class _BodyState extends State<Body> {
       validator: (value) => checkPhoneNumber(value),
       maxLength: 12,
       decoration: const InputDecoration(
-          hintText: "Nomor Handphone",
-          labelText: "Nomor Handphone",
+          hintText: "Nomor Telepon",
+          labelText: "Nomor Telepon",
           counterText: "",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.horizontal(
@@ -109,8 +109,8 @@ class _BodyState extends State<Body> {
       obscureText: _obscureText,
       validator: (value) => checkPassword(value),
       decoration: InputDecoration(
-          hintText: "Password",
-          labelText: "Password",
+          hintText: "Kata Sandi",
+          labelText: "Kata Sandi",
           suffixIcon: IconButton(
               onPressed: () {
                 setState(() {
@@ -285,44 +285,44 @@ class _BodyState extends State<Body> {
               const SizedBox(
                 height: 45,
                 child: Text(
-                  "REGISTRASI PENGGUNA",
+                  "DAFTAR AKUN",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
-              Padding(
+              Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
                 child: buildUsernameField(),
               ),
               //SizedBox(height: size.height * 0.02),
-              Padding(
+              Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
                 child: buildFullnameField(),
               ),
               //SizedBox(height: size.height * 0.02),
-              Padding(
+              Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
                 child: buildAddressField(),
               ),
-              Padding(
+              Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
                 child: buildPhoneField(),
               ),
-              Padding(
+              Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
                 child: buildEmailField(),
               ),
-              Padding(
+              Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
                 child: buildPasswordField(),
               ),
               RoundedButton(
-                text: "REGISTER",
+                text: "DAFTAR",
                 textColor: const Color.fromARGB(255, 255, 255, 255),
                 press: () {
                   if (!_formKey.currentState!.validate()) {
