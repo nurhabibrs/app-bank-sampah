@@ -1,4 +1,4 @@
-import 'dart:io' show Platform, exit;
+import 'dart:io';
 import 'package:app_banksampah/views/welcome/welcome.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/services.dart';

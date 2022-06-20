@@ -219,12 +219,6 @@ class _BodyState extends State<Body> {
               data: formData)
           .then(
         (response) {
-          _controllerUsername.clear();
-          _controllerFullname.clear();
-          _controllerAddress.clear();
-          _controllerPhone.clear();
-          _controllerEmail.clear();
-          _controllerPassword.clear();
           AlertDialog alert = AlertDialog(
             content: const Text("Pendaftaran Pengguna Berhasil"),
             actions: [

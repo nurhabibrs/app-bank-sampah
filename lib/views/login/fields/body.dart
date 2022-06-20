@@ -102,8 +102,6 @@ class _BodyState extends State<Body> {
           .then(
         (response) {
           String token = response.data["response"]["token"];
-          _controllerUsername.clear();
-          _controllerPassword.clear();
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -135,6 +133,7 @@ class _BodyState extends State<Body> {
           return alert;
         },
       );
+      print(_errorMessage);
     }
   }
 
