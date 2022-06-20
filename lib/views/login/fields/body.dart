@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:app_banksampah/views/home/home.dart';
@@ -100,6 +101,8 @@ class _BodyState extends State<Body> {
           .post('https://345d-103-23-224-196.ap.ngrok.io/login', data: formData)
           .then(
         (response) {
+          _controllerUsername.clear();
+          _controllerPassword.clear();
           String token = response.data["response"]["token"];
           Navigator.push(
             context,
@@ -166,10 +169,9 @@ class _BodyState extends State<Body> {
                 text: "LOGIN",
                 textColor: const Color.fromARGB(255, 255, 255, 255),
                 press: () {
-                  if (!_formKey.currentState!.validate()) {
-                    return;
+                  if (_formKey.currentState!.validate()) {
+                    loginUser();
                   }
-                  loginUser();
                 },
               ),
             ],
