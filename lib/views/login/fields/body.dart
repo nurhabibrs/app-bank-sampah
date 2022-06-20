@@ -101,9 +101,9 @@ class _BodyState extends State<Body> {
           .post('https://345d-103-23-224-196.ap.ngrok.io/login', data: formData)
           .then(
         (response) {
+          String token = response.data["response"]["token"];
           _controllerUsername.clear();
           _controllerPassword.clear();
-          String token = response.data["response"]["token"];
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -155,14 +155,14 @@ class _BodyState extends State<Body> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
-              Padding(
+              Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
                 child: buildUsernameField(),
               ),
-              Padding(
+              Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
                 child: buildPasswordField(),
               ),
               RoundedButton(
