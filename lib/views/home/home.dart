@@ -1,11 +1,11 @@
 import 'dart:io';
-import 'package:app_banksampah/views/welcome/welcome.dart';
+import 'package:flutter/material.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/services.dart';
 import '../../extensions/hidden_keyboard.dart';
-import '../../views/home/fields/background.dart';
+import 'background.dart';
 import '../../services/user_api_auth.dart';
-import 'package:flutter/material.dart';
+import '../welcome/welcome.dart';
 
 class HomePage extends StatefulWidget {
   final String token;
@@ -32,8 +32,8 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> logout() async {
     await _apiServices.logout(widget.token);
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const CoverScreen()));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const WelcomeScreen()));
   }
 
   Future<bool> _onWillPopCallback() async {
@@ -108,7 +108,8 @@ class _HomePageState extends State<HomePage> {
                                       clipBehavior: Clip.hardEdge,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: Color.fromARGB(255, 50, 205, 50),
+                                        color: const Color.fromARGB(
+                                            255, 50, 205, 50),
                                         border: Border.all(
                                             width: 3, color: Colors.blue),
                                       ),
@@ -306,11 +307,7 @@ class _HomePageState extends State<HomePage> {
                                   TextButton(
                                     onPressed: () async {
                                       await _apiServices.logout(widget.token);
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const CoverScreen()));
+                                      Navigator.of(context).pop();
                                     },
                                     style: TextButton.styleFrom(
                                         backgroundColor:

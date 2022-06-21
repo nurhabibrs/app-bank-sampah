@@ -1,15 +1,20 @@
 import 'dart:io';
+import 'package:app_banksampah/views/login/login.dart';
+import 'package:app_banksampah/views/register/register.dart';
 import 'package:flutter/material.dart';
-import 'package:app_banksampah/views/welcome/welcome.dart';
 import 'package:flutter/services.dart';
+
+import 'views/welcome/welcome.dart';
 
 Future<void> main() async {
   // Import certificate to verify the certificate
   WidgetsFlutterBinding.ensureInitialized();
   ByteData data = await PlatformAssetBundle()
       .load('assets/ca-certificate/lets-encrypt-r3.pem');
-  SecurityContext.defaultContext
-      .setTrustedCertificatesBytes(data.buffer.asUint8List());
+  SecurityContext.defaultContext.setTrustedCertificatesBytes(
+    data.buffer.asUint8List(),
+  );
+
   runApp(const BankSampahApp());
 }
 
@@ -25,7 +30,12 @@ class BankSampahApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      home: const CoverScreen(),
+      home: const WelcomeScreen(),
+      initialRoute: WelcomeScreen.nameRoute,
+      routes: {
+        RegisterScreen.nameRoute: (context) => const RegisterScreen(),
+        LoginScreen.nameRoute: (context) => const LoginScreen(),
+      },
     );
   }
 }
