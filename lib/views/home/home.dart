@@ -19,11 +19,9 @@ class _HomePageState extends State<HomePage> {
   final ApiServices _apiServices = ApiServices();
   static const snackBarDuration = Duration(seconds: 3);
   final snackBar = const SnackBar(
-    content: Text('Press back again to leave'),
+    content: Text('Tekan sekali lagi untuk keluar.'),
     duration: snackBarDuration,
   );
-
-  late DateTime backButtonPressTime;
 
   Future<Map<String, dynamic>> getUserData() async {
     dynamic response = await _apiServices.getUserProfileData(widget.token);
@@ -52,7 +50,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: DoubleBackToCloseApp(
         snackBar: const SnackBar(
-          content: Text("Tekan sekali lagi untuk keluar."),
+          content: Text('Tekan sekali lagi untuk keluar.'),
         ),
         child: WillPopScope(
           onWillPop: () => _onWillPopCallback(),

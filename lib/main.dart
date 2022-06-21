@@ -1,10 +1,9 @@
 import 'dart:io';
-import 'package:app_banksampah/views/login/login.dart';
-import 'package:app_banksampah/views/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'views/welcome/welcome.dart';
+import 'views/login/login.dart';
+import 'views/register/register.dart';
 
 Future<void> main() async {
   // Import certificate to verify the certificate
