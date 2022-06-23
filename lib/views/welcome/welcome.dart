@@ -17,6 +17,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: DoubleBackToCloseApp(
         snackBar: snackBar,
         child: Background(

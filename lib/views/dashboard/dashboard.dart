@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: DoubleBackToCloseApp(
         snackBar: snackBar,
         child: WillPopScope(
@@ -61,21 +62,24 @@ class _HomePageState extends State<HomePage> {
                   child: FutureBuilder<Map<String, dynamic>>(
                     future: getUserData(),
                     builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                          height: size.height,
+                          width: size.width,
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.blue,
+                              ),
+                              strokeWidth: 6,
+                            ),
+                          ),
+                        );
+                      }
                       // Login as admin
                       if (snapshot.hasData &&
                           snapshot.data!["response"]["user_info"]["is_admin"] ==
                               1) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return SizedBox(
-                            height: size.height,
-                            width: size.width,
-                            // color: Colors.blueGrey,
-                            child: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        }
                         String username =
                             snapshot.data!["response"]["user_info"]["username"];
                         String fullname =
@@ -86,7 +90,6 @@ class _HomePageState extends State<HomePage> {
                             snapshot.data!["response"]["user_info"]["phone"];
                         String email =
                             snapshot.data!["response"]["user_info"]["email"];
-
                         return SizedBox(
                           width: size.width,
                           height: size.height,

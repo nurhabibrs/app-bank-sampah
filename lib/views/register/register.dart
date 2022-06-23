@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'background.dart';
 import '../../extensions/hidden_keyboard.dart';
-import '../../extensions/rounded_button.dart';
+// import '../../extensions/rounded_button.dart';
 import '../login/login.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -17,6 +17,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  bool isLoading = false;
   bool _obscureText = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _controllerUsername = TextEditingController();
@@ -228,9 +229,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               data: formData)
           .then(
         (response) {
-          const snackBar = SnackBar(
+          SnackBar snackBar = const SnackBar(
             content: Text("Pendaftaran Pengguna Berhasil."),
-            duration: Duration(seconds: 1),
+            duration: Duration(seconds: 2),
             backgroundColor: Color.fromARGB(255, 50, 205, 50),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -248,24 +249,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // print("Username = $_fieldUsername\n Email = $_fieldEmail \nNomor HP =$_fieldPhone");
 
       if (Platform.isAndroid) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Registrasi Gagal!"),
-              content: Text("$fieldUsername\n$fieldEmail\n$fieldPhone"),
-              actions: [
-                TextButton(
-                  child: const Text("KEMBALI"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-          barrierDismissible: false,
+        SnackBar snackBar = SnackBar(
+          content: Text("$fieldUsername\n$fieldEmail\n$fieldPhone"),
+          duration: const Duration(seconds: 2),
+          backgroundColor: Colors.redAccent,
         );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else if (Platform.isIOS) {
         showDialog(
           context: context,
@@ -291,8 +280,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return HiddenKeyboard(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: WillPopScope(
           onWillPop: () => _onWillPopCallback(context),
           child: Background(
@@ -341,16 +332,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           vertical: 5, horizontal: 40),
                       child: buildPasswordField(),
                     ),
-                    RoundedButton(
-                      text: "DAFTAR",
-                      textColor: const Color.fromARGB(255, 255, 255, 255),
-                      press: () {
-                        if (!_formKey.currentState!.validate()) {
-                          return;
-                        }
-                        registerUser();
-                      },
-                    ),
+                    isLoading
+                        ? Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: const CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.blue,
+                              ),
+                              strokeWidth: 6,
+                            ),
+                          )
+                        : Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            width: size.width * 0.8,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+
+                                    Future.delayed(const Duration(seconds: 2),
+                                        () {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    });
+                                    registerUser();
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary:
+                                      const Color.fromARGB(255, 50, 205, 50),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 40),
+                                ),
+                                child: const Text(
+                                  'DAFTAR',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ),

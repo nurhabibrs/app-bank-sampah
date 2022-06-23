@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../extensions/hidden_keyboard.dart';
-import '../../extensions/rounded_button.dart';
 import '../dashboard/dashboard.dart';
 import 'background.dart';
 
@@ -16,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool isLoading = false;
   bool _obscureText = true;
   final TextEditingController _controllerUsername = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
@@ -166,8 +166,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return HiddenKeyboard(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: WillPopScope(
           onWillPop: () => _onWillPopCallback(context),
           child: Background(
@@ -196,15 +198,52 @@ class _LoginScreenState extends State<LoginScreen> {
                           vertical: 5, horizontal: 40),
                       child: _buildPasswordField(),
                     ),
-                    RoundedButton(
-                      text: "LOGIN",
-                      textColor: const Color.fromARGB(255, 255, 255, 255),
-                      press: () {
-                        if (_formKey.currentState!.validate()) {
-                          _loginUser();
-                        }
-                      },
-                    ),
+                    isLoading
+                        ? Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: const CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.blue,
+                              ),
+                              strokeWidth: 6,
+                            ),
+                          )
+                        : Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            width: size.width * 0.8,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+
+                                    Future.delayed(const Duration(seconds: 2),
+                                        () {
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    });
+                                    _loginUser();
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary:
+                                      const Color.fromARGB(255, 50, 205, 50),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 40),
+                                ),
+                                child: const Text(
+                                  'LOGIN',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      fontSize: 20),
+                                ),
+                              ),
+                            ),
+                          ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
