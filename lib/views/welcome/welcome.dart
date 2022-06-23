@@ -7,6 +7,10 @@ import 'background.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const nameRoute = '/';
+  final snackBar = const SnackBar(
+    content: Text('Tekan sekali lagi untuk keluar.'),
+    duration: Duration(seconds: 3),
+  );
   const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,9 +18,7 @@ class WelcomeScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: DoubleBackToCloseApp(
-        snackBar: const SnackBar(
-          content: Text('Tekan sekali lagi untuk keluar.'),
-        ),
+        snackBar: snackBar,
         child: Background(
           child: SingleChildScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,

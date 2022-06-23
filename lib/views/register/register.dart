@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'background.dart';
@@ -225,57 +228,64 @@ class _RegisterScreenState extends State<RegisterScreen> {
               data: formData)
           .then(
         (response) {
-          AlertDialog alert = AlertDialog(
-            content: const Text("Pendaftaran Pengguna Berhasil"),
-            actions: [
-              TextButton(
-                child: const Text("LANJUT"),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                  );
-                },
-              ),
-            ],
+          const snackBar = SnackBar(
+            content: Text("Pendaftaran Pengguna Berhasil."),
+            duration: Duration(seconds: 1),
+            backgroundColor: Color.fromARGB(255, 50, 205, 50),
           );
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return alert;
-            },
-          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Navigator.of(context).pushReplacementNamed(LoginScreen.nameRoute);
+
           // print(response.data["response"]["message"]);
         },
       );
     } on DioError catch (err) {
       // Error message Pop Up
-      String? _fieldUsername =
+      String? fieldUsername =
           err.response?.data["response"]["username"].toString();
-      String? _fieldEmail = err.response?.data["response"]["email"].toString();
-      String? _fieldPhone = err.response?.data["response"]["phone"].toString();
+      String? fieldEmail = err.response?.data["response"]["email"].toString();
+      String? fieldPhone = err.response?.data["response"]["phone"].toString();
       // print("Username = $_fieldUsername\n Email = $_fieldEmail \nNomor HP =$_fieldPhone");
 
-      AlertDialog alert = AlertDialog(
-        title: const Text("Registrasi Gagal!"),
-        content: Text("$_fieldUsername\n$_fieldEmail\n$_fieldPhone"),
-        actions: [
-          TextButton(
-            child: const Text("KEMBALI"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
+      if (Platform.isAndroid) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Registrasi Gagal!"),
+              content: Text("$fieldUsername\n$fieldEmail\n$fieldPhone"),
+              actions: [
+                TextButton(
+                  child: const Text("KEMBALI"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+          barrierDismissible: false,
+        );
+      } else if (Platform.isIOS) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: const Text("Registrasi Gagal!"),
+              content: Text("$fieldUsername\n$fieldEmail\n$fieldPhone"),
+              actions: [
+                TextButton(
+                  child: const Text("KEMBALI"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+          barrierDismissible: false,
+        );
+      }
     }
   }
 

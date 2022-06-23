@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../extensions/hidden_keyboard.dart';
 import '../../extensions/rounded_button.dart';
-import '../home/home.dart';
+import '../dashboard/dashboard.dart';
 import 'background.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -117,27 +119,47 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } on DioError catch (err) {
       // Error message Pop Up
-      String? _errorMessage = err.response?.data["response"].toString();
+      String? errorMessage = err.response?.data["response"].toString();
 
-      AlertDialog alert = AlertDialog(
-        title: const Text("Login Gagal!"),
-        content: Text("$_errorMessage"),
-        actions: [
-          TextButton(
-            child: const Text("OK"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
+      if (Platform.isAndroid) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Login Gagal!"),
+              content: Text("$errorMessage"),
+              actions: [
+                TextButton(
+                  child: const Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+          barrierDismissible: false,
+        );
+      } else if (Platform.isIOS) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CupertinoAlertDialog(
+              title: const Text("Login Gagal!"),
+              content: Text("$errorMessage"),
+              actions: [
+                TextButton(
+                  child: const Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+          barrierDismissible: false,
+        );
+      }
       // print(_errorMessage);
     }
   }

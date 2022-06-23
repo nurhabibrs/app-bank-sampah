@@ -14,8 +14,8 @@ class ApiServices {
 
       return response.data;
     } on DioError catch (err) {
-      String? _errorMessage = err.response?.data;
-      return _errorMessage;
+      dynamic errorMessage = err.response?.data;
+      return errorMessage;
     }
   }
 
@@ -47,8 +47,8 @@ class ApiServices {
       );
       return response.data;
     } on DioError catch (err) {
-      String? _errorMessage = err.response?.data;
-      return _errorMessage;
+      dynamic errorMessage = err.response?.data;
+      return errorMessage;
     }
   }
 }
