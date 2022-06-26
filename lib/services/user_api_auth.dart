@@ -11,7 +11,6 @@ class ApiServices {
           headers: {'Authorization': 'Bearer $token'},
         ),
       );
-
       return response.data;
     } on DioError catch (err) {
       dynamic errorMessage = err.response?.data;

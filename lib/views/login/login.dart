@@ -216,12 +216,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
+                                    if (!mounted) return;
                                     setState(() {
                                       isLoading = true;
                                     });
 
                                     Future.delayed(const Duration(seconds: 2),
                                         () {
+                                      if (!mounted) return;
                                       setState(() {
                                         isLoading = false;
                                       });
