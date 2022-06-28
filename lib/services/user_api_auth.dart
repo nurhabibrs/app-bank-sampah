@@ -18,6 +18,36 @@ class ApiServices {
     }
   }
 
+  Future getAllUserData(String token) async {
+    try {
+      Response response = await _dio.get(
+        'https://345d-103-23-224-196.ap.ngrok.io/admin/profile/get/all',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      return response.data;
+    } on DioError catch (err) {
+      dynamic errorMessage = err.response?.data;
+      return errorMessage;
+    }
+  }
+
+  Future searchUserData(String token) async {
+    try {
+      Response response = await _dio.get(
+        'https://345d-103-23-224-196.ap.ngrok.io//admin/profile/get/:segment',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      return response.data;
+    } on DioError catch (err) {
+      dynamic errorMessage = err.response?.data;
+      return errorMessage;
+    }
+  }
+
   // Future<dynamic> updateUserProfile({
   //   required String token,
   //   required Map<String, dynamic> data,
