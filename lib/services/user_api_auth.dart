@@ -8,7 +8,10 @@ class ApiServices {
       Response response = await _dio.get(
         'https://345d-103-23-224-196.ap.ngrok.io/profile',
         options: Options(
-          headers: {'Authorization': 'Bearer $token'},
+          headers: {
+            'Authorization': 'Bearer $token',
+            Headers.contentTypeHeader: 'application/json'
+          },
         ),
       );
       return response.data;
@@ -23,7 +26,10 @@ class ApiServices {
       Response response = await _dio.get(
         'https://345d-103-23-224-196.ap.ngrok.io/admin/profile/get/all',
         options: Options(
-          headers: {'Authorization': 'Bearer $token'},
+          headers: {
+            'Authorization': 'Bearer $token',
+            Headers.contentTypeHeader: 'application/json'
+          },
         ),
       );
       return response.data;
@@ -33,12 +39,15 @@ class ApiServices {
     }
   }
 
-  Future searchUserData(String token) async {
+  Future searchUserData(String token, username) async {
     try {
       Response response = await _dio.get(
-        'https://345d-103-23-224-196.ap.ngrok.io//admin/profile/get/:segment',
+        'https://345d-103-23-224-196.ap.ngrok.io/admin/profile/get/$username',
         options: Options(
-          headers: {'Authorization': 'Bearer $token'},
+          headers: {
+            'Authorization': 'Bearer $token',
+            Headers.contentTypeHeader: 'application/json'
+          },
         ),
       );
       return response.data;
@@ -71,7 +80,10 @@ class ApiServices {
       Response response = await _dio.get(
         'https://345d-103-23-224-196.ap.ngrok.io/logout',
         options: Options(
-          headers: {'Authorization': 'Bearer $token'},
+          headers: {
+            'Authorization': 'Bearer $token',
+            Headers.contentTypeHeader: 'application/json',
+          },
         ),
       );
       return response.data;

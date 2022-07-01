@@ -16,11 +16,12 @@ class AdminDashboard extends StatefulWidget {
   State<AdminDashboard> createState() => _AdminDashboardState();
 }
 
-class _AdminDashboardState extends State<AdminDashboard> {
-  final ApiServices _apiServices = ApiServices();
+final ApiServices apiServices = ApiServices();
 
+class _AdminDashboardState extends State<AdminDashboard> {
+  List<String> listNameUser = [];
   Future<Map<String, dynamic>> getAllUserData() async {
-    dynamic response = await _apiServices.getAllUserData(widget.token);
+    dynamic response = await apiServices.getAllUserData(widget.token);
     return response;
   }
 
@@ -46,7 +47,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
           actions: [
             IconButton(
               onPressed: () {
-                showSearch(context: context, delegate: MySearch());
+                showSearch(
+                  context: context,
+                  delegate:
+                      MySearch(token: widget.token, listNameUser: listNameUser),
+                );
               },
               icon: const Icon(Icons.search),
             ),
@@ -104,6 +109,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   ['data'][index]['phone'];
                               // var isActive = snapshotAllUser.data!['response']
                               //     ['data'][index]['is_active'];
+                              listNameUser.add(username);
+                              print(listNameUser);
 
                               return Card(
                                 color: const Color.fromARGB(255, 225, 235, 236),
@@ -155,7 +162,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       ),
                     );
                   } else {
-                    debugPrint(snapshotAllUser.error.toString());
+                    // debugPrint(snapshotAllUser.error.toString());
                   }
                   return const SizedBox();
                 },
@@ -181,7 +188,6 @@ class NavigationDrawer extends StatefulWidget {
 }
 
 class _NavigationDrawerState extends State<NavigationDrawer> {
-  final ApiServices _apiServices = ApiServices();
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -247,18 +253,29 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
 
   Widget buildItems(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
       child: Wrap(
-        runSpacing: 16,
         children: [
           ListTile(
+            leading: const SizedBox(
+              height: double.infinity,
+              child: Icon(Icons.settings_outlined),
+            ),
             title: const Text("Pengaturan"),
             onTap: () {},
           ),
+          const Divider(
+            height: 5,
+            thickness: 2,
+          ),
           ListTile(
+            leading: const SizedBox(
+              height: double.infinity,
+              child: Icon(Icons.logout_outlined),
+            ),
             title: const Text("Logout"),
             onTap: () async {
-              await _apiServices.logout(widget.token);
+              await apiServices.logout(widget.token);
               if (!mounted) return;
               Navigator.of(context)
                   .pushReplacementNamed(WelcomeScreen.nameRoute);
@@ -272,9 +289,15 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
 }
 
 class MySearch extends SearchDelegate {
-  final users = ["Ana", "Abi", "Andara"];
+  String token;
+  List<String> listNameUser;
 
-  final recentUsers = ["Bintang", "Candra", "Dela"];
+  MySearch({required this.token, required this.listNameUser});
+
+  Future<Map<String, dynamic>> searchData(query) async {
+    dynamic response = await apiServices.searchUserData(token, query);
+    return response;
+  }
 
   @override
   Widget? buildLeading(BuildContext context) {
@@ -294,9 +317,10 @@ class MySearch extends SearchDelegate {
     return [
       IconButton(
         onPressed: () {
-          if (query.isEmpty) {
-            close(context, null);
-          } else {}
+          // if (query.isEmpty) {
+          query = '';
+          close(context, null);
+          // } else {}
         },
         icon: const Icon(Icons.clear),
       ),
@@ -305,25 +329,96 @@ class MySearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        height: 100,
-        width: 100,
-        child: Card(
-          color: Colors.red,
-          child: Center(
-            child: Text(query),
-          ),
-        ),
+    Size size = MediaQuery.of(context).size;
+    return SizedBox(
+      width: size.width,
+      child: FutureBuilder<Map<String, dynamic>>(
+        future: searchData(query),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return SizedBox(
+              height: size.height,
+              width: size.width,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Colors.blue,
+                  ),
+                  strokeWidth: 6,
+                ),
+              ),
+            );
+          }
+          if (snapshot.hasData &&
+              snapshot.data!['response'] != 'User not found') {
+            String username = snapshot.data!['response']['user']['username'];
+            String fullname = snapshot.data!['response']['user']['fullname'];
+            String phone = snapshot.data!['response']['user']['phone'];
+            return Container(
+              width: size.width,
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Card(
+                    color: const Color.fromARGB(255, 225, 235, 236),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Flexible(
+                                child: ListTile(
+                                  leading: const SizedBox(
+                                    height: double.infinity,
+                                    child: Icon(Icons.account_circle_rounded),
+                                  ),
+                                  title: Text(username),
+                                  subtitle: Text(
+                                      'NAMA LENGKAP\n$fullname\nNOMOR TELEPON\n$phone'),
+                                ),
+                              ),
+                              TextButton.icon(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
+                                ),
+                                onPressed: () => {},
+                                icon: const Icon(
+                                  Icons.check_rounded,
+                                ),
+                                label: const Text(
+                                  'Aktif',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            debugPrint(snapshot.error.toString());
+          }
+          return const SizedBox();
+        },
       ),
     );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    final recentUsers = [];
     final suggestionList = query.isEmpty
         ? recentUsers
-        : users.where((element) => element.startsWith(query)).toList();
+        : listNameUser.where((element) => element.startsWith(query)).toList();
 
     return ListView.builder(
       itemCount: suggestionList.length,
@@ -346,6 +441,7 @@ class MySearch extends SearchDelegate {
             ),
           ),
           onTap: () {
+            query = suggestionList[index];
             showResults(context);
           },
         );
