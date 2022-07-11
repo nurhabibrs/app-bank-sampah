@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../services/user_api_auth.dart';
 import '../welcome/welcome.dart';
@@ -23,6 +24,72 @@ class _AdminDashboardState extends State<AdminDashboard> {
   Future<Map<String, dynamic>> getAllUserData() async {
     dynamic response = await apiServices.getAllUserData(widget.token);
     return response;
+  }
+
+  Future activateUser(value, token, name) async {
+    var dio = Dio();
+
+    try {
+      // Check response
+      await dio
+          .post(
+        'https://345d-103-23-224-196.ap.ngrok.io/admin/profile/update/$name',
+        data: {'is_active': value},
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            Headers.contentTypeHeader: 'application/json'
+          },
+        ),
+      )
+          .then(
+        (response) {
+          print(response.data);
+          SnackBar snackBar = const SnackBar(
+            content: Text("Aktivasi User berahasil."),
+            duration: Duration(seconds: 2),
+            backgroundColor: Color.fromARGB(255, 50, 205, 50),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        },
+      );
+    } on DioError catch (err) {
+      print(err.message);
+      // Error message Pop Up
+      // String? fieldUsername =
+      //     err.response?.data["response"]["username"].toString();
+      // String? fieldEmail = err.response?.data["response"]["email"].toString();
+      // String? fieldPhone = err.response?.data["response"]["phone"].toString();
+      // print("Username = $_fieldUsername\n Email = $_fieldEmail \nNomor HP =$_fieldPhone");
+
+      // if (Platform.isAndroid) {
+      //   SnackBar snackBar = SnackBar(
+      //     content: Text("$fieldUsername\n$fieldEmail\n$fieldPhone"),
+      //     duration: const Duration(seconds: 2),
+      //     backgroundColor: Colors.redAccent,
+      //   );
+      //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      // } else if (Platform.isIOS) {
+      //   showDialog(
+      //     context: context,
+      //     builder: (BuildContext context) {
+      //       return CupertinoAlertDialog(
+      //         title: const Text("Registrasi Gagal!"),
+      //         content: Text("$fieldUsername\n$fieldEmail\n$fieldPhone"),
+      //         actions: [
+      //           TextButton(
+      //             child: const Text("KEMBALI"),
+      //             onPressed: () {
+      //               Navigator.of(context).pop();
+      //             },
+      //           ),
+      //         ],
+      //       );
+      //     },
+      //     barrierDismissible: false,
+      //   );
+      // }
+    }
   }
 
   @override
@@ -99,7 +166,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
                             shrinkWrap: true,
                             physics: const ScrollPhysics(),
                             itemCount: snapshotAllUser.data!['response']
-                                ['items_per_page'],
+                                        ['total_items'] >
+                                    snapshotAllUser.data!['response']
+                                        ['items_per_page']
+                                ? snapshotAllUser.data!['response']
+                                    ['items_per_page']
+                                : snapshotAllUser.data!['response']
+                                    ['total_items'],
                             itemBuilder: (context, index) {
                               String username = snapshotAllUser
                                   .data!['response']['data'][index]['username'];
@@ -107,10 +180,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                   .data!['response']['data'][index]['fullname'];
                               String phone = snapshotAllUser.data!['response']
                                   ['data'][index]['phone'];
-                              // var isActive = snapshotAllUser.data!['response']
-                              //     ['data'][index]['is_active'];
+                              int isActive = snapshotAllUser.data!['response']
+                                  ['data'][index]['is_active'];
                               listNameUser.add(username);
-                              print(listNameUser);
+                              // print(listNameUser);
+                              // print(username);
+                              // print(isActive);
 
                               return Card(
                                 color: const Color.fromARGB(255, 225, 235, 236),
@@ -136,19 +211,43 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                           ),
                                           TextButton.icon(
                                             style: TextButton.styleFrom(
-                                              backgroundColor: Colors.white,
+                                              backgroundColor: isActive == 0
+                                                  ? Colors.red
+                                                  : const Color.fromARGB(
+                                                      255, 50, 205, 50),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(24.0),
                                               ),
                                             ),
-                                            onPressed: () => {},
-                                            icon: const Icon(
-                                              Icons.check_rounded,
-                                            ),
-                                            label: const Text(
-                                              'Aktif',
-                                            ),
+                                            onPressed: () => {
+                                              if (isActive == 0)
+                                                {
+                                                  activateUser(
+                                                      1, widget.token, username)
+                                                }
+                                              else
+                                                {
+                                                  activateUser(
+                                                      0, widget.token, username)
+                                                }
+                                            },
+                                            icon: Icon(
+                                                isActive == 0
+                                                    ? Icons.cancel_sharp
+                                                    : Icons.check_circle,
+                                                color: Colors.white),
+                                            label: isActive == 0
+                                                ? const Text(
+                                                    'Nonaktif',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  )
+                                                : const Text(
+                                                    'Aktif',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
                                           ),
                                         ],
                                       ),
