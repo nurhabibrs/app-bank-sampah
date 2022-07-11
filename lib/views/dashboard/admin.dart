@@ -44,51 +44,25 @@ class _AdminDashboardState extends State<AdminDashboard> {
       )
           .then(
         (response) {
-          print(response.data);
-          SnackBar snackBar = const SnackBar(
-            content: Text("Aktivasi User berahasil."),
-            duration: Duration(seconds: 2),
-            backgroundColor: Color.fromARGB(255, 50, 205, 50),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          if (response.data['response']['new_profile']['is_active'] == 1) {
+            SnackBar snackBar = const SnackBar(
+              content: Text("Aktifkan user berhasil."),
+              duration: Duration(seconds: 1),
+              backgroundColor: Color.fromARGB(255, 50, 205, 50),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          } else {
+            SnackBar snackBar = const SnackBar(
+              content: Text("Nonaktifkan user berhasil."),
+              duration: Duration(seconds: 1),
+              backgroundColor: Colors.red,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         },
       );
     } on DioError catch (err) {
-      print(err.message);
-      // Error message Pop Up
-      // String? fieldUsername =
-      //     err.response?.data["response"]["username"].toString();
-      // String? fieldEmail = err.response?.data["response"]["email"].toString();
-      // String? fieldPhone = err.response?.data["response"]["phone"].toString();
-      // print("Username = $_fieldUsername\n Email = $_fieldEmail \nNomor HP =$_fieldPhone");
-
-      // if (Platform.isAndroid) {
-      //   SnackBar snackBar = SnackBar(
-      //     content: Text("$fieldUsername\n$fieldEmail\n$fieldPhone"),
-      //     duration: const Duration(seconds: 2),
-      //     backgroundColor: Colors.redAccent,
-      //   );
-      //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      // } else if (Platform.isIOS) {
-      //   showDialog(
-      //     context: context,
-      //     builder: (BuildContext context) {
-      //       return CupertinoAlertDialog(
-      //         title: const Text("Registrasi Gagal!"),
-      //         content: Text("$fieldUsername\n$fieldEmail\n$fieldPhone"),
-      //         actions: [
-      //           TextButton(
-      //             child: const Text("KEMBALI"),
-      //             onPressed: () {
-      //               Navigator.of(context).pop();
-      //             },
-      //           ),
-      //         ],
-      //       );
-      //     },
-      //     barrierDismissible: false,
-      //   );
-      // }
+      return err.message;
     }
   }
 
@@ -99,11 +73,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
       width: size.width,
       height: size.height,
       child: Scaffold(
-        appBar: // PreferredSize(
-            //   preferredSize: const Size.fromHeight(80),
-            AppBar(
+        appBar: AppBar(
           centerTitle: true,
-          // toolbarHeight: 80,
           title: const Text(
             "Aktivasi User",
             style: TextStyle(
@@ -223,13 +194,13 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                             onPressed: () => {
                                               if (isActive == 0)
                                                 {
-                                                  activateUser(
-                                                      1, widget.token, username)
+                                                  activateUser(1, widget.token,
+                                                      username),
                                                 }
                                               else
                                                 {
-                                                  activateUser(
-                                                      0, widget.token, username)
+                                                  activateUser(0, widget.token,
+                                                      username),
                                                 }
                                             },
                                             icon: Icon(
@@ -428,6 +399,46 @@ class MySearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    Future activateUser(value, token, name) async {
+      var dio = Dio();
+
+      try {
+        // Check response
+        await dio
+            .post(
+          'https://345d-103-23-224-196.ap.ngrok.io/admin/profile/update/$name',
+          data: {'is_active': value},
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+              Headers.contentTypeHeader: 'application/json'
+            },
+          ),
+        )
+            .then(
+          (response) {
+            if (response.data['response']['new_profile']['is_active'] == 1) {
+              SnackBar snackBar = const SnackBar(
+                content: Text("Aktivasi user berhasil."),
+                duration: Duration(seconds: 1),
+                backgroundColor: Color.fromARGB(255, 50, 205, 50),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            } else {
+              SnackBar snackBar = const SnackBar(
+                content: Text("Nonaktivasi user berhasil."),
+                duration: Duration(seconds: 1),
+                backgroundColor: Color.fromARGB(255, 50, 205, 50),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+          },
+        );
+      } on DioError catch (err) {
+        return err.message;
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     return SizedBox(
       width: size.width,
@@ -453,6 +464,7 @@ class MySearch extends SearchDelegate {
             String username = snapshot.data!['response']['user']['username'];
             String fullname = snapshot.data!['response']['user']['fullname'];
             String phone = snapshot.data!['response']['user']['phone'];
+            int isActive = snapshot.data!['response']['user']['is_active'];
             return Container(
               width: size.width,
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -481,18 +493,39 @@ class MySearch extends SearchDelegate {
                               ),
                               TextButton.icon(
                                 style: TextButton.styleFrom(
-                                  backgroundColor: Colors.white,
+                                  backgroundColor: isActive == 0
+                                      ? Colors.red
+                                      : const Color.fromARGB(255, 50, 205, 50),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24.0),
                                   ),
                                 ),
-                                onPressed: () => {},
-                                icon: const Icon(
-                                  Icons.check_rounded,
-                                ),
-                                label: const Text(
-                                  'Aktif',
-                                ),
+                                onPressed: () => {
+                                  if (isActive == 0)
+                                    {
+                                      activateUser(1, token, username),
+                                      isActive = 1
+                                    }
+                                  else
+                                    {
+                                      activateUser(0, token, username),
+                                      isActive = 0
+                                    }
+                                },
+                                icon: Icon(
+                                    isActive == 0
+                                        ? Icons.cancel_sharp
+                                        : Icons.check_circle,
+                                    color: Colors.white),
+                                label: isActive == 0
+                                    ? const Text(
+                                        'Nonaktif',
+                                        style: TextStyle(color: Colors.white),
+                                      )
+                                    : const Text(
+                                        'Aktif',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                               ),
                             ],
                           ),
